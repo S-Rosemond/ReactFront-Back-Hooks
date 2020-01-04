@@ -81,6 +81,9 @@ img {
 .text-success {
   color: var(--success-color);
 }
+.text-light {
+ color: var(--light-color)
+}
 
 .text-danger {
   color: var(--danger-color);
@@ -107,6 +110,11 @@ img {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
 }
 
 /* Cards */
@@ -224,6 +232,11 @@ img {
   font-size: 0.8rem;
   padding: 0.3rem 1rem;
   margin-right: 0.2rem;
+}
+
+.btn-mx {
+  padding: 0.4rem 1.3rem;
+  cursor: pointer;
 }
 
 .badge {
