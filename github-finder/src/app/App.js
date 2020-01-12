@@ -31,12 +31,13 @@ class App extends Component {
 		const indexOfLastPost = this.state.currentPage * this.state.postPerPage;
 		const indexOfFirstPost = indexOfLastPost - this.state.postPerPage;
 		const currentPosts = this.state.users.slice(indexOfFirstPost, indexOfLastPost);
+		let loading = this.state.loading;
 
 		return (
 			<div className="App">
 				<Navbar />
 				<div className="container">
-					<Users users={currentPosts} />
+					<Users users={currentPosts} loading={loading} />
 					<Pagination
 						postPerPage={this.state.postPerPage}
 						totalPosts={this.state.users.length}
