@@ -3,10 +3,12 @@ import axios from 'axios';
 import Navbar from '../components/Layout/NavBar';
 import Users from '../components/users/Users';
 import Search from './../components/users/Search';
+import Alert from './../components/utils/Alert';
 import Pagination from '../components/utils/Pagination';
 
 class App extends Component {
 	state = {
+		alert: null,
 		users: [],
 		loading: false,
 		currentPage: 1,
@@ -31,6 +33,16 @@ class App extends Component {
 		this.setState({ currentPage: number });
 	};
 
+	clearUsers = () => {
+		this.setState({ users: [] });
+	};
+
+	setAlert = (msg, type) => {
+		this.setState({ alert: { msg, type } });
+
+		setTimeout((params) => this.setState({ alert: null }), 5000);
+	};
+
 	// Search Github users
 	searchUsers = async (text) => {
 		const endPoint = `https://api.github.com/search/users?q=${text}&client_id=${process.env
@@ -50,7 +62,13 @@ class App extends Component {
 			<div className="App">
 				<Navbar />
 				<div className="container">
-					<Search searchUsers={this.searchUsers} />
+					<Alert alert={this.state.alert} />
+					<Search
+						searchUsers={this.searchUsers}
+						clearUsers={this.clearUsers}
+						showClear={this.state.users.length > 0 ? true : false}
+						setAlert={this.setAlert}
+					/>
 					<Users users={currentPosts} loading={loading} />
 					<Pagination
 						postPerPage={this.state.postPerPage}

@@ -11,8 +11,12 @@ export class Search extends Component {
 	onSubmit = (e) => {
 		e.preventDefault();
 
-		this.props.searchUsers(this.state.text);
-		this.setState({ text: '' });
+		if (this.state.text === '') {
+			this.props.setAlert('Please enter a query', 'dark');
+		} else {
+			this.props.searchUsers(this.state.text);
+			this.setState({ text: '' });
+		}
 	};
 
 	render() {
@@ -28,13 +32,21 @@ export class Search extends Component {
 					/>
 					<input type="submit" value="Search" className="btn-primary btn-block btn-mx" />
 				</form>
+				{this.props.showClear && (
+					<button className="btn btn-dark btn-block" onClick={this.props.clearUsers}>
+						Clear
+					</button>
+				)}
 			</div>
 		);
 	}
 }
 
 Search.propTypes = {
-	searchUsers: PropTypes.func.isRequired
+	searchUsers: PropTypes.func.isRequired,
+	clearUsers: PropTypes.func.isRequired,
+	showClear: PropTypes.bool.isRequired,
+	setAlert: PropTypes.func.isRequired
 };
 
 export default Search;
