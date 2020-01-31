@@ -1,49 +1,42 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import GithubContext from './../../context/github/githubContext';
 
-export class Search extends Component {
-	state = {
-		text: ''
+const Search = ({ setAlert }) => {
+	const githubContext = useContext(GithubContext);
+
+	const [ text, setText ] = useState('');
+
+	const onChange = (e) => {
+		setText(e.target.value);
 	};
-
-	onChange = (e) => this.setState({ [e.target.name]: e.target.value });
-
-	onSubmit = (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault();
 
-		if (this.state.text === '') {
-			this.props.setAlert('Please enter a query', 'dark');
+		if (text === '') {
+			setAlert('Please enter a query', 'dark');
 		} else {
-			this.props.searchUsers(this.state.text);
-			this.setState({ text: '' });
+			githubContext.searchUsers(text);
+			setText('');
 		}
 	};
 
-	render() {
-		return (
-			<div>
-				<form className="form" onSubmit={this.onSubmit}>
-					<input
-						type="text"
-						name="text"
-						placeholder="Search Users"
-						value={this.state.text}
-						onChange={this.onChange}
-					/>
-					<input type="submit" value="Search" className="btn-primary btn-block btn-mx" />
-				</form>
-				{this.props.showClear && (
-					<button className="btn btn-dark btn-block" onClick={this.props.clearUsers}>
-						Clear
-					</button>
-				)}
-			</div>
-		);
-	}
-}
+	return (
+		<div>
+			<form className="form" onSubmit={onSubmit}>
+				<input type="text" name="text" placeholder="Search Users" value={text} onChange={onChange} />
+				<input type="submit" value="Search" className="btn-primary btn-block btn-mx" />
+			</form>
+			{githubContext.users.length > 0 && (
+				<button className="btn btn-dark btn-block" onClick={clearUsers}>
+					Clear
+				</button>
+			)}
+		</div>
+	);
+};
 
 Search.propTypes = {
-	searchUsers: PropTypes.func.isRequired,
 	clearUsers: PropTypes.func.isRequired,
 	showClear: PropTypes.bool.isRequired,
 	setAlert: PropTypes.func.isRequired

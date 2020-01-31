@@ -1,18 +1,10 @@
 import React from 'react';
 
 const Alert = ({ alert }) => {
-	let m, t;
-	if (alert) {
-		const { msg, type } = alert;
-
-		m = msg;
-		t = type;
-	}
-
 	return (
 		alert !== null && (
-			<div className={`alert alert-${t}`}>
-				<i className="fas fa-info-circle" /> {m}
+			<div className={`alert alert-${alert.type}`}>
+				<i className="fas fa-info-circle" /> {alert.msg} {console.log(alert.type, alert.msg, alert)}
 			</div>
 		)
 	);
