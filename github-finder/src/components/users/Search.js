@@ -28,7 +28,7 @@ const Search = ({ setAlert }) => {
 				<input type="submit" value="Search" className="btn-primary btn-block btn-mx" />
 			</form>
 			{githubContext.users.length > 0 && (
-				<button className="btn btn-dark btn-block" onClick={clearUsers}>
+				<button className="btn btn-dark btn-block" onClick={githubContext.clearUsers}>
 					Clear
 				</button>
 			)}

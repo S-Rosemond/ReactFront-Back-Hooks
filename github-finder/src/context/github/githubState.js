@@ -13,21 +13,39 @@ const GithubState = (props) => {
 
 	const [ state, dispatch ] = useReducer(GithubReducer, initialState);
 
+	/* Github code ref: from bushblade, original implemntation did not work */
+	const github = axios.create({
+		baseURL: 'https://api.github.com',
+		timeout: 2000,
+		headers: { Authorization: process.env.GITHUB_ACCESS_TOKEN }
+	});
+
+	/* 
+	All implementations did not work, authorization:undefined
+	Not sure if it is intentional, process.env.etc is correct, rate limit not decreasing, receiving response. Need to review.
+	*/
+
 	// Search Users
 	const searchUsers = async (text) => {
 		setLoading(true);
 
-		const res = await axios.get(
-			`https://api.github.com/search/users?q=${text}&client_id=${process.env
-				.REACT_APP_GITHUB_CLIENT_ID} &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-		);
+		//Authorization undefined
+		// const config = {
+		// 	headers: {
+		// 		Authorization: process.env.GITHUB_ACCESS_TOKEN
+		// 	}
+		// };
+
+		// const res = await axios.get(`https://api.github.com/search/users?q=${text}`, config);
+
+		const res = await github.get(`/search/users?q=${text}`);
 
 		dispatch({ type: SEARCH_USERS, payload: res.data.items });
 	};
 	// Get User
 
 	// Clear Users
-	clearUsers = () => dispatch({ type: CLEAR_USERS, payload: [] });
+	const clearUsers = () => dispatch({ type: CLEAR_USERS, payload: [] });
 
 	// Set Loading
 
