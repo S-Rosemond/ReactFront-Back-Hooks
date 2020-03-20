@@ -8,12 +8,16 @@ const Navbar = (props) => {
 			<Link to='/'>
 			<h1>
 				<i className={props.icon} /> {props.title}
-			</h1>
-				
+			</h1>	
 			</Link>
-			<ul><li>
-			<Link to='/about'>About</Link>
-				</li></ul>
+			<ul>
+				<li>
+					<Link to='/'>Home</Link>
+				</li>
+				<li>
+					<Link to='/about'>About</Link>
+				</li>
+			</ul>
 			
 		</nav>
 	);

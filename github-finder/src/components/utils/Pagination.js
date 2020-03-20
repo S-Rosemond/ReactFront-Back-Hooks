@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import GithubContext from './../../context/github/githubContext';
 
-const Pagination = ({ postPerPage, totalPosts, paginate }) => {
+const Pagination = ({ postPerPage, paginate }) => {
+	const githubContext = useContext(GithubContext);
+
+	const totalPosts = githubContext.users.length;
+
 	const pageNumbers = [];
 
 	for (let i = 1; i <= Math.ceil(totalPosts / postPerPage); ++i) {

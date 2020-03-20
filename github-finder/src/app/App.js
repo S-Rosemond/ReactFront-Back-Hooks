@@ -1,42 +1,37 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from '../components/Layout/NavBar';
-import Users from '../components/users/Users';
-import Search from './../components/users/Search';
 import Alert from './../components/utils/Alert';
-import Pagination from '../components/utils/Pagination';
+import Home from './../components/pages/Home';
 import About from './../components/pages/About';
+import NotFound from './../components/pages/NotFound';
 import User from './../components/users/User';
 import GithubState from './../context/github/githubState';
+import AlertState from './../context/alert/alertState';
+
+
 
 const App = () => {
-	const [ alert, setAlert ] = useState(null);
-	const [ user, setUser ] = useState({});
-	const [ loading, setLoading ] = useState(false);
-
-	const showAlert = (msg, type) => {
-		setAlert({ msg, type });
-
-		setTimeout(() => setAlert(null), 5000);
-	};
+	
 
 	return (
 		<GithubState>
+			<AlertState>
 			<Router>
+			<div className="App">
+				<Navbar/>
+				<div className="container">
+				<Alert />
 				<Switch>
-					<Route
-						exact
-						render={(props) => (
-							<div className="container">
-								<Alert alert={alert} />
-								<Search setAlert={showAlert} />
-								<Users />
-							</div>
-						)}
-					/>
+					<Route path='/' exact component={Home} />
+					<Route path='/about' exact component={About}/>
+					<Route exact path="/user/:login" component={User} />
+					<Route component={NotFound} />
 				</Switch>
+			</div>
+			</div>	
 			</Router>
+			</AlertState>
 		</GithubState>
 	);
 };
